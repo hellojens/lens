@@ -4,6 +4,8 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+
+
 var main = (function($) { var _ = {
 
 	/**
@@ -487,6 +489,21 @@ var main = (function($) { var _ = {
 				_.settings.layoutDuration = 0;
 
 			}
+			
+			$.getJSON('https://www.reddit.com/r/videos/hot.json', function(data) {
+	
+				$.each(data.data.children, function(i,item){
+					console.log(item.data);
+	
+					if(item.data.domain === "youtube.com") {
+						$("#thumbnails").append('<article><a class="thumbnail" href="'+item.data.media.oembed.thumbnail_url+'" data-position="left center"><img src="'+item.data.thumbnail+'"></a><h2></h2><p></p></article>');
+						$("article").append('<h2>'+item.data.title+'</h2>');
+						$("article").append('<p>'+item.data.url+'</p>');
+						_.initViewer();
+					}
+				});
+	
+			});
 
 		// Skel.
 			skel.breakpoints({
